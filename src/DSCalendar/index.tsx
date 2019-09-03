@@ -36,11 +36,21 @@ export const DSCalendar = () => {
     };
 
     const onSelectDay = (date: any) => {
+        if (
+            date.format('DD/MM/YYYY') === state.startDate.format('DD/MM/YYYY') ||
+            date.format('DD/MM/YYYY') === state.endDate.format('DD/MM/YYYY')
+        ) {
+            setState({ ...state, startDate: moment(date), endDate: moment(date) });
+            return;
+        }
+
         if (moment(date).isAfter(state.startDate)) {
             setState({ ...state, endDate: moment(date) });
             return;
         }
+
         setState({ ...state, startDate: moment(date), endDate: moment(date) });
+
         return;
     };
 
@@ -65,8 +75,6 @@ export const DSCalendar = () => {
                     </div>
                 ))}
             </div>
-            Range: From {state.startDate.format('DD/MM/YYYY')} To{' '}
-            {state.endDate.format('DD/MM/YYYY')}
         </div>
     );
 };
