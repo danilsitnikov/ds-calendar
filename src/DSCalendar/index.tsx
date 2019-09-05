@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './styles.scss';
-import getDates from './getDates';
 import moment, { Moment } from 'moment';
+import { getDates } from './helpers/getDates';
 import { Header } from './components/Header';
 import { isSelectedDate } from './helpers/isSelectedDate';
 import { onSelectDay } from './helpers/onSelectDay';
 import { WeekDays } from './components/WeekDays';
 import { isBeforeAfterDate } from './helpers/isBeforeAfterDate';
+import './styles.scss';
 
 const { dates, currentMonth } = getDates();
 const defaultValues = {
@@ -21,7 +21,7 @@ export const DSCalendar = () => {
 
     return (
         <div className="dsc">
-            <Header currentMonth={currentMonth} />
+            <Header currentMonth={state.currentMonth} state={state} setState={setState} />
             <div className="dsc-body">
                 <WeekDays />
                 {state.dates.map((date: Moment) => (

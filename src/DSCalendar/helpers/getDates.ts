@@ -35,12 +35,11 @@ const getDateBeforeAndAfterMonth = (
     return [...currentMonthDatesBefore, ...currentMonthDates, ...currentMonthDatesAfter];
 };
 
-export default (payload: Moment = moment()) => {
+export const getDates = (payload: Moment = moment()) => {
     const currentMonth = moment(payload);
     const currentMonthLength = moment(payload).daysInMonth();
     const daysInCurrentMonth = toArrayByLength(currentMonthLength);
     const currentMonthDates = getMonthDates(daysInCurrentMonth, currentMonth);
-
     const dates = getDateBeforeAndAfterMonth(currentMonthDates, currentMonth, currentMonthLength);
 
     return { dates, currentMonth };
