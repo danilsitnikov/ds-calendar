@@ -6,6 +6,8 @@ export const isSelectedDate = (state: any, date: Moment) => {
         date.format('DD/MM/YYYY') === state.startDate.format('DD/MM/YYYY') ||
         date.format('DD/MM/YYYY') === state.endDate.format('DD/MM/YYYY')
     ) {
-        return 'selected';
+        return true;
     }
+
+    return false;
 };

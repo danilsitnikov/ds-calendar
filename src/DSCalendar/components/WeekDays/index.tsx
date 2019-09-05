@@ -6,7 +6,7 @@ export const WeekDays = () => (
     <>
         {weekDays.map((day: string) => (
             <div className="dsc-item weekday" key={day}>
-                {day[0]}
+                {day.substring(0, 2)}
             </div>
         ))}
     </>

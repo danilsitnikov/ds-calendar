@@ -6,11 +6,7 @@ const toArrayByLength = (length: number) => Array.from({ length }, (x, i) => i +
 const getMonthDates = (arr: number[], date: Moment) =>
     arr.map((dayNumber: number) => moment(date).date(dayNumber));
 
-const getDateBeforeAndAfterMonth = (
-    currentMonthDates: Moment[],
-    currentMonth: Moment,
-    currentMonthLength: number,
-) => {
+const getDateBeforeAndAfterMonth = (currentMonthDates: Moment[], currentMonth: Moment) => {
     const currentMonthFirstDay = parseInt(currentMonth.startOf('month').format('E'), 10);
     const currentMonthLastDay = parseInt(currentMonth.endOf('month').format('E'), 10);
 
@@ -40,7 +36,24 @@ export const getDates = (payload: Moment = moment()) => {
     const currentMonthLength = moment(payload).daysInMonth();
     const daysInCurrentMonth = toArrayByLength(currentMonthLength);
     const currentMonthDates = getMonthDates(daysInCurrentMonth, currentMonth);
-    const dates = getDateBeforeAndAfterMonth(currentMonthDates, currentMonth, currentMonthLength);
+    const currentMonthCells = getDateBeforeAndAfterMonth(currentMonthDates, currentMonth);
 
-    return { dates, currentMonth };
+    const nextMonth = moment(payload).add(1, 'months');
+    const nextMonthLength = moment(nextMonth).daysInMonth();
+    const daysInNextMonth = toArrayByLength(nextMonthLength);
+    const nextMonthDates = getMonthDates(daysInNextMonth, nextMonth);
+    const nextMonthCells = getDateBeforeAndAfterMonth(nextMonthDates, nextMonth);
+
+    const dates = {
+        current: {
+            month: currentMonth,
+            cells: currentMonthCells,
+        },
+        next: {
+            month: nextMonth,
+            cells: nextMonthCells,
+        },
+    };
+
+    return dates;
 };

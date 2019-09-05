@@ -14,28 +14,65 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
+    position: relative;
 
-    &-header,
-    &-body {
+    &-switcher,
+    &-body,
+    &-month {
         display: flex;
     }
 
-    &-header {
+    &-switcher {
         justify-content: space-between;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
 
         &-prev,
         &-next {
             cursor: pointer;
+            margin-top: 10px;
+            font-weight: 100;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            background: #dcdcdc;
+            border-radius: 50%;
 
             &:hover {
                 color: #00408C;
             }
         }
+
+        &-prev {
+            margin-left: 20px;
+        }
+
+        &-next {
+            margin-right: 20px;
+        }
+
     }
 
     &-body {
+        align-items: flex-start
+    }
+
+    &-month {
         flex-wrap: wrap;
         width: 308px;
+
+        &__title {
+            width: 100%;
+            text-align: center;
+        }
+
+        &:nth-child(2) {
+            margin-left: 20px;
+        }
     }
 
     &-item {
@@ -52,9 +89,12 @@
             color: #ccc;
         }
 
-        &:not(.weekday) {
-            &:hover,
-            &.active {
+        &.weekday {
+            font-weight: bold;
+        }
+
+        &:not(.weekday):not(.ghost) {
+            &:hover {
                 background: #E7F2FF;
                 color:#00408C;
                 cursor: pointer;

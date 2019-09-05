@@ -1,6 +1,10 @@
 import moment, { Moment } from 'moment';
 
-export const onSelectDay = (state: any, date: Moment, setState: any) => {
+export const onSelectDay = (state: any, date: Moment, setState: any, decline: boolean) => {
+    if (decline) {
+        return false;
+    }
+
     if (
         date.format('DD/MM/YYYY') === state.startDate.format('DD/MM/YYYY') ||
         date.format('DD/MM/YYYY') === state.endDate.format('DD/MM/YYYY')

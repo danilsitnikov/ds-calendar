@@ -2,41 +2,31 @@ import React, { useState } from 'react';
 import moment, { Moment } from 'moment';
 import { getDates } from './helpers/getDates';
 import { Header } from './components/Header';
-import { isSelectedDate } from './helpers/isSelectedDate';
-import { onSelectDay } from './helpers/onSelectDay';
-import { WeekDays } from './components/WeekDays';
-import { isBeforeAfterDate } from './helpers/isBeforeAfterDate';
+import { Month } from './components/Month';
 import './styles.scss';
 
-const { dates, currentMonth } = getDates();
-const defaultValues = {
-    startDate: moment(),
-    endDate: moment(),
-    currentMonth,
-    dates,
-};
+interface DSCalendarProps {
+    startDate?: Moment | string;
+    endDate?: Moment | string;
+    twoMonths?: boolean;
+    onChange?: (values: Moment[]) => void;
+}
 
-export const DSCalendar = () => {
+export const DSCalendar: React.FC<DSCalendarProps> = ({ twoMonths }) => {
+    const defaultValues = {
+        startDate: moment(),
+        endDate: moment(),
+        dates: getDates(),
+    };
     const [state, setState] = useState(defaultValues);
+    const { current, next } = state.dates;
 
     return (
         <div className="dsc">
-            <Header currentMonth={state.currentMonth} state={state} setState={setState} />
+            <Header state={state} setState={setState} />
             <div className="dsc-body">
-                <WeekDays />
-                {state.dates.map((date: Moment) => (
-                    <div
-                        key={date.format('DDMMYYY')}
-                        className={[
-                            'dsc-item',
-                            isBeforeAfterDate(state, date),
-                            isSelectedDate(state, date),
-                        ].join(' ')}
-                        onClick={() => onSelectDay(state, date, setState)}
-                    >
-                        {date.format('D')}
-                    </div>
-                ))}
+                <Month data={current} state={state} setState={setState} />
+                {twoMonths && <Month data={next} state={state} setState={setState} />}
             </div>
         </div>
     );
